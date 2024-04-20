@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "653630050865",
+    "firebase_url": "https://shortvideo-30409-default-rtdb.firebaseio.com",
+    "project_id": "shortvideo-30409",
+    "storage_bucket": "shortvideo-30409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653630050865:android:b5f758c38313212e903b10",
+        "android_client_info": {
+          "package_name": "com.example.shortvideo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653630050865-p32kcrkfh4s1oo0p7405ojmkt8chvkd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0tgafd0E_esTf_Gr7K6INq5oSMhNB3fI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653630050865-p32kcrkfh4s1oo0p7405ojmkt8chvkd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
