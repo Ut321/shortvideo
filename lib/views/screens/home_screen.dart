@@ -29,11 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: pageIdx,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, size: 30),
+            icon: Icon(Icons.home, size: 25),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, size: 30),
+            icon: Icon(Icons.search, size: 25),
             label: 'Search',
           ),
           BottomNavigationBarItem(
@@ -41,11 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message, size: 30),
+            icon: Icon(Icons.message, size: 25),
             label: 'Messages',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 30),
+            icon: Icon(Icons.person, size: 25),
             label: 'Profile',
           ),
         ],

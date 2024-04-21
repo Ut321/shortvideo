@@ -21,24 +21,25 @@ class LoginScreen extends StatelessWidget {
             Text(
               'Short Video App',
               style: TextStyle(
-                fontSize: 35,
+                fontSize: 28,
                 color: buttonColor,
                 fontWeight: FontWeight.w900,
               ),
             ),
-            const Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            // const Text(
+            //   'Login',
+            //   style: TextStyle(
+            //     fontSize: 23,
+            //     fontWeight: FontWeight.w700,
+            //   ),
+            // ),
             const SizedBox(
-              height: 25,
+              height: 40,
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
+              // width: MediaQuery.of(context).size.width,
+              height: 50,
+              margin: const EdgeInsets.symmetric(horizontal: 30),
               child: TextInputField(
                 controller: _emailController,
                 icon: Icons.email,
@@ -49,8 +50,9 @@ class LoginScreen extends StatelessWidget {
               height: 25,
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
+              // width: MediaQuery.of(context).size.width,
+              height: 50,
+              margin: const EdgeInsets.symmetric(horizontal: 30),
               child: TextInputField(
                 controller: _passwordController,
                 lableText: 'Password',
@@ -62,8 +64,8 @@ class LoginScreen extends StatelessWidget {
               height: 30,
             ),
             Container(
-              width: MediaQuery.of(context).size.width - 40,
-              height: 50,
+              width: MediaQuery.of(context).size.width - 65,
+              height: 40,
               decoration: BoxDecoration(
                 color: buttonColor,
                 borderRadius: const BorderRadius.all(
@@ -79,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                   child: Text(
                     'Login',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -95,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                 const Text(
                   'Don\'t have an account? ',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
                 InkWell(
@@ -106,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: Text(
                     'Register',
-                    style: TextStyle(fontSize: 20, color: buttonColor),
+                    style: TextStyle(fontSize: 18, color: buttonColor),
                   ),
                 ),
               ],

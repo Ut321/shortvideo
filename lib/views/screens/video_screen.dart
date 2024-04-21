@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -16,14 +17,13 @@ class VideoScreen extends StatelessWidget {
 
   buildProfile(String profilePhoto) {
     return SizedBox(
-      width: 60,
-      height: 60,
+      width: 30,
+      height: 30,
       child: Stack(children: [
         Positioned(
-          left: 5,
           child: Container(
-            width: 50,
-            height: 50,
+            width: 30,
+            height: 30,
             padding: const EdgeInsets.all(1),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -92,7 +92,7 @@ class VideoScreen extends StatelessWidget {
                 Column(
                   children: [
                     const SizedBox(
-                      height: 100,
+                      height: 200,
                     ),
                     Expanded(
                       child: Row(
@@ -108,15 +108,25 @@ class VideoScreen extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    data.username,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Row(
+                                    children: [
+                                      buildProfile(
+                                        data.profilePhoto,
+                                      ),
+                                      Gap(
+                                        6.0,
+                                      ),
+                                      Text(
+                                        data.username,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Text(
                                     data.caption,
@@ -152,9 +162,9 @@ class VideoScreen extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                buildProfile(
-                                  data.profilePhoto,
-                                ),
+                                // buildProfile(
+                                //   data.profilePhoto,
+                                // ),
                                 Column(
                                   children: [
                                     InkWell(
@@ -162,9 +172,9 @@ class VideoScreen extends StatelessWidget {
                                           videoController.likeVideo(data.id),
                                       child: Icon(
                                         Icons.favorite,
-                                        size: 40,
+                                        size: 32,
                                         color: data.likes.contains(
-                                            authController.user.uid)
+                                                authController.user.uid)
                                             ? Colors.red
                                             : Colors.white,
                                       ),
@@ -182,8 +192,7 @@ class VideoScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     InkWell(
-                                      onTap: () =>
-                                      Navigator.of(context).push(
+                                      onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => CommentScreen(
                                             id: data.id,
@@ -192,7 +201,7 @@ class VideoScreen extends StatelessWidget {
                                       ),
                                       child: const Icon(
                                         Icons.comment,
-                                        size: 40,
+                                        size: 30,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -212,7 +221,7 @@ class VideoScreen extends StatelessWidget {
                                       onTap: () {},
                                       child: const Icon(
                                         Icons.reply,
-                                        size: 40,
+                                        size: 30,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -234,6 +243,9 @@ class VideoScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 25,
                     ),
                   ],
                 ),

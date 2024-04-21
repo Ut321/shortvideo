@@ -11,12 +11,15 @@ class AddVideoScreen extends StatelessWidget {
 
   pickVideo(ImageSource src, BuildContext context) async {
     final video = await ImagePicker().pickVideo(source: src);
+    print("Video pick");
     if (video != null) {
       Navigator.of(context).push(
+        
         MaterialPageRoute(
           builder: (context) => ConfirmScreen(
             videoFile: File(video.path),
             videoPath: video.path,
+            
           ),
         ),
       );
@@ -24,6 +27,7 @@ class AddVideoScreen extends StatelessWidget {
   }
 
   showOptionsDialog(BuildContext context) {
+    print("Open Dailog");
     return showDialog(
       context: context,
       builder: (context) => SimpleDialog(

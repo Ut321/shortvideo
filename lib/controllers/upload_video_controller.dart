@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:shortvideo/views/screens/home_screen.dart';
 import 'package:video_compress/video_compress.dart';
 import '../constants.dart';
 import '../models/video.dart';
 
 class UploadVideoController extends GetxController {
-
-  
   _compressVideo(String videoPath) async {
     final compressedVideo = await VideoCompress.compressVideo(
       videoPath,
@@ -67,7 +66,7 @@ class UploadVideoController extends GetxController {
       await firestore.collection('videos').doc('Video $len').set(
             video.toJson(),
           );
-      Get.back();
+      Get.off(HomeScreen());
     } catch (e) {
       Get.snackbar(
         'Error Uploading Video',

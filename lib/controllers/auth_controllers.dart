@@ -12,11 +12,15 @@ import '../views/screens/auth/login_screen.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<User?> _user;
-  late Rx<File?> _pickedImage;
+  // late Rx<File?> _pickedImage;
+    // Reactive variable to hold the image
+  var _pickedImage = Rx<File?>(null);
 
   File? get profilePhoto => _pickedImage.value;
 
   User get user => _user.value!;
+
+
   @override
   void onReady() {
     super.onReady();
@@ -33,16 +37,28 @@ class AuthController extends GetxController {
     }
   }
 
-  void pickImage() async {
-    final pickedImage =
+  // void pickImage() async {
+  //   final pickedImage =
+  //       await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if (pickedImage != null) {
+  //     Get.snackbar('Profile Picture',
+  //         'You have successfully selected your profile picture!');
+  //     _pickedImage = Rx<File?>(File(pickedImage.path));
+  //   }
+  // }
+    void pickImage() async {
+    final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
+    if (pickedFile != null) {
+      _pickedImage.value = File(pickedFile.path); // Update the reactive variable
       Get.snackbar('Profile Picture',
           'You have successfully selected your profile picture!');
-      _pickedImage = Rx<File?>(File(pickedImage.path));
     }
   }
-
+    void deleteImage() {
+    _pickedImage.value = null;
+    Get.snackbar('Profile Picture', 'Your profile picture has been removed.');
+  }
   // upload to firebase storage
   Future<String> _uploadToStorage(File image) async {
     try {
