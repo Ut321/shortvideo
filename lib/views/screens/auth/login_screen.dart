@@ -1,4 +1,10 @@
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shortvideo/views/screens/auth/signup_screen.dart';
 import 'package:shortvideo/views/widgets/text_input_field.dart';
 
@@ -113,9 +119,131 @@ class LoginScreen extends StatelessWidget {
                 ),
               ],
             ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ForgotPasswordScreen(),
+                ));
+              },
+              child: Text(
+                'Forget password !',
+                style: TextStyle(fontSize: 18, color: buttonColor),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                signInWithGoogle();
+              },
+              child: Text(
+                'Sign in with Google !',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+class ForgotPasswordScreen extends StatelessWidget {
+  ForgotPasswordScreen({Key? key}) : super(key: key);
+
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reset Password'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                String email = _emailController.text.trim();
+                if (email.isNotEmpty) {
+                  attemptResetPassword(email, context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Please enter an email address")));
+                }
+              },
+              child: const Text('Send Reset Link'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void attemptResetPassword(String email, BuildContext context) async {
+  final usersRef = firestore.collection('users');
+  final querySnapshot = await usersRef.where('email', isEqualTo: email).get();
+
+  if (querySnapshot.docs.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("No registered user found with that email")));
+  } else {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Reset link sent to your email")));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to send reset link")));
+    }
+  }
+}
+
+bool _isEmailValid(String email) {
+  return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+}
+
+Future<User?> signInWithGoogle() async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+
+  if (googleSignInAccount != null) {
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final UserCredential userCredential =
+        await firebaseAuth.signInWithCredential(credential);
+    final User? user = userCredential.user;
+
+    // Check if user is not null and not anonymous
+    if (user != null && !user.isAnonymous) {
+      assert(await user.getIdToken() !=
+          null); // This assertion is effectively redundant because getIdToken should always return a non-null value if user is not null
+
+      final User? currentUser = firebaseAuth.currentUser;
+      assert(user.uid ==
+          currentUser?.uid); // Use null-aware access for currentUser
+
+      print('signInWithGoogle succeeded: $user');
+
+      return user;
+    }
+  }
+
+  return null; // Return null if Google sign-in fails or user is anonymous
 }
