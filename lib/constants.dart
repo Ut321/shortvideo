@@ -17,9 +17,8 @@ List pages = [
 
 // COLORS
 const backgroundColor = Colors.black;
-var buttonColor = Colors.red[400];
+const buttonColor = Colors.purple;
 const borderColor = Colors.grey;
-
 // FIREBASE
 var firebaseAuth = FirebaseAuth.instance;
 var firebaseStorage = FirebaseStorage.instance;

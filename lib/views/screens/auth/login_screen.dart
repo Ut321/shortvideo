@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Short Video App',
               style: TextStyle(
                 fontSize: 28,
@@ -72,9 +72,9 @@ class LoginScreen extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width - 65,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: buttonColor,
-                borderRadius: const BorderRadius.all(
+                borderRadius: BorderRadius.all(
                   Radius.circular(5),
                 ),
               ),
@@ -112,33 +112,53 @@ class LoginScreen extends StatelessWidget {
                       builder: (context) => SignupScreen(),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Register',
-                    style: TextStyle(fontSize: 18, color: buttonColor),
+                    style: TextStyle(fontSize: 18, color: Colors.redAccent),
                   ),
                 ),
               ],
             ),
+            const SizedBox(height: 20),
+
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ForgotPasswordScreen(),
                 ));
               },
-              child: Text(
-                'Forget password !',
-                style: TextStyle(fontSize: 18, color: buttonColor),
+              child: const Text(
+                'Forget password ',
+                style: TextStyle(fontSize: 12, color: Colors.green),
               ),
             ),
+            const SizedBox(height: 50),
             GestureDetector(
-              onTap: () {
-                signInWithGoogle();
-              },
-              child: Text(
-                'Sign in with Google !',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
+                onTap: () {
+                  signInWithGoogle();
+                },
+                child: Container(
+                  height: 35,
+                  width: 200,
+                  color: Colors.white,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            'assets/google-logo.webp',
+                            height: 30,
+                            width: 30,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Sign in with Google',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ]),
+                )),
           ],
         ),
       ),

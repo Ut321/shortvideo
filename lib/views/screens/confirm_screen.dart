@@ -32,7 +32,6 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   @override
   void initState() {
     super.initState();
-    print("Confirm Screen ");
     controller = VideoPlayerController.file(widget.videoFile)
       ..initialize().then((_) {
         setState(() {});
@@ -40,9 +39,6 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
         controller.setVolume(0.5);
         controller.setLooping(true);
       });
-    var final_ut = uploadVideoController.uploadVideo(
-        _songController.text, _captionController.text, widget.videoPath);
-    print("video uploded ${final_ut}");
   }
 
   @override
@@ -54,20 +50,25 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   }
 
   Future<void> _handleUpload() async {
-    print("");
     setState(() {
       _isUploading = true;
     });
-
-    // Simulating upload delay
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Assuming upload is always successful
-    setState(() {
-      _isUploading = false;
-    });
-
-    _showUploadCompleteDialog();
+    try {
+      var uploadResult = await uploadVideoController.uploadVideo(
+          _songController.text, _captionController.text, widget.videoPath);
+      print("Video uploaded: $uploadResult");
+      _showUploadCompleteDialog();
+    } catch (e) {
+      Get.snackbar(
+        'Error Uploading Video',
+        e.toString(),
+      );
+      print("Error uploading video: ${e.toString()}");
+    } finally {
+      setState(() {
+        _isUploading = false;
+      });
+    }
   }
 
   void _showUploadCompleteDialog() {
@@ -114,9 +115,9 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         width: MediaQuery.of(context).size.width - 20,
                         child: TextInputField(
+                          lableText: 'Song name',
                           controller: _songController,
                           icon: Icons.music_note,
-                          lableText: 'Song name',
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -124,9 +125,9 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         width: MediaQuery.of(context).size.width - 20,
                         child: TextInputField(
+                          lableText: 'Caption',
                           controller: _captionController,
                           icon: Icons.closed_caption,
-                          lableText: 'Caption',
                         ),
                       ),
                       const SizedBox(height: 10),
